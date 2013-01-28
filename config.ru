@@ -1,3 +1,3 @@
 require "./procon"
 
-run Cuba
+run Procon
