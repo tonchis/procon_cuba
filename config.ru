@@ -1,0 +1,3 @@
+require "./procon"
+
+run Cuba

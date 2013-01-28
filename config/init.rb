@@ -1,0 +1,5 @@
+require "cuba"
+require "rack/protection"
+require "cuba/haml"
+require "mysql"
+require "sequel"
