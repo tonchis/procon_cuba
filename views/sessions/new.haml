@@ -2,7 +2,7 @@
   %h1 Log in!
 .row
   .span8.offset3
-    %form(accept-charset="UTF-8" action="/sessions" method="post")
+    %form(accept-charset="UTF-8" action="/login" method="post")
       %fieldset
         .clearfix
           %label(for="username") Username
@@ -12,10 +12,6 @@
           %label(for="password") Password
           .input
             %input(id="password" name="password" type="password")
-        .clearfix
-          %label(for="remember_me") Remember me
-          .input
-            %input(id="remember_me" name="remember_me" type="checkbox" value="1")
         .actions
           %input(class="btn primary" name="commit" type="submit" value="Log in")
           %a(href="/users/new" class="btn") Register

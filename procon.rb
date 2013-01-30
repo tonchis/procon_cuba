@@ -1,4 +1,5 @@
 require_relative "config/init"
+Dir["./models/*.rb"].each {|file| require file}
 
 class Procon < Cuba
   use Rack::Session::Cookie, :secret => SecureRandom.hex(64)
@@ -31,9 +32,12 @@ class Procon < Cuba
         res.write view("sessions/new")
       end
 
-      on post do
-        on param("username"), param("password") do
-          # create login with Shield
+      on post, param("username"), param("password") do |username, password|
+        user = User.authenticate(username, password)
+        if user
+          res.redirect "dilemmas"
+        else
+          res.redirect "login"
         end
       end
     end

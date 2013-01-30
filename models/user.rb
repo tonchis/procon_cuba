@@ -2,7 +2,7 @@ class User < Sequel::Model
   include Shield::Model
 
   def self.fetch(username)
-    [username: username].first
+    self[username: username]
   end
 end
 
