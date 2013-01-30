@@ -13,10 +13,8 @@
           %span{"data-bind" => "text: pros().length + ' vs ' + cons().length"}
           %a{href: "#", class: "delete", style: "display: none;",
           "data-bind" => "click: $parent.delete_dilemma"} delete
-      = text_field_tag :name, nil, placeholder: "Your new dilemma",
-        "data-bind" => "value: new_dilemma, valueUpdate: 'afterkeydown', executeOnEnter: add_dilemma"
-      = button_tag "Add!", class: "btn success",
-        "data-bind" => "click: add_dilemma"
+      %input{"data-bind" => "value: new_dilemma, valueUpdate: 'afterkeydown', executeOnEnter: add_dilemma", id: "name", name: "name", placeholder: "Your new dilemma", type: "text"}
+      %button{class: "btn success", "data-bind" => "click: add_dilemma", name: "button", type: "submit"} Add!
 
 #edit-dilemma{"data-bind" => "template: {name: 'edit-template'}"}
 
@@ -40,21 +38,11 @@
           "data-bind" => "click: $parent.delete_con"} delete
     .row
       .span8.offset3
-        = text_field_tag nil, nil,
-          "data-bind" => 'value: new_reason, valueUpdate: "afterkeydown"',
-          placeholder: "A good/bad reason", tabindex: 1
-        = button_tag "Pro", class: "btn success",
-          "data-bind" => 'click: add_pro, enable: new_reason().length > 0',
-          tabindex: 2
-        = button_tag "Con", class: "btn danger",
-          "data-bind" => 'click: add_con, enable: new_reason().length > 0',
-          tabindex: 3
-        = button_tag "Both?", class: "btn",
-          "data-bind" => 'click: add_both, enable: new_reason().length > 0',
-          tabindex: 4
+        %input{"data-bind" => "value: new_reason, valueUpdate: &quot;afterkeydown&quot;", id: "", placeholder: "A good/bad reason", tabindex: "1", type: "text"}
+        %button{class: "btn success", "data-bind" => "click: add_pro, enable: new_reason().length &gt; 0", name: "button", tabindex: "2", type: "submit"} Pro
+        %button{class: "btn danger", "data-bind" => "click: add_con, enable: new_reason().length &gt; 0", name: "button", tabindex: "3", type: "submit"} Con
+        %button{class: "btn", "data-bind" => "click: add_both, enable: new_reason().length &gt; 0", name: "button", tabindex: "4", type: "submit"} Both?
         .actions
-          = button_tag "Save", class: "btn primary", "data-bind" => "click: save_dilemma",
-            tabindex: 5
-          = button_tag "Back", class: "btn", "data-bind" => "click: cancel_edit",
-            tabindex: 6
+          %button{class: "btn primary", "data-bind" => "click: save_dilemma", name: "button", tabindex: "5", type: "submit"} Save
+          %button{class: "btn", "data-bind" => "click: cancel_edit", name: "button", tabindex: "6", type: "submit"} Back
 

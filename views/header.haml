@@ -2,7 +2,7 @@
   .fill
     .container
       %a(href="/" class="brand") Procon
-      - if false
+      - if current_user
         .row.pull-right
           .span2
             %a(href="/logout" method="delete" class="btn small pull-right") Logout
