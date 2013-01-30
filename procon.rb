@@ -3,10 +3,12 @@ require_relative "config/init"
 class Procon < Cuba
   use Rack::Session::Cookie, :secret => SecureRandom.hex(64)
   use Rack::Protection
+  use Rack::Static,
+      root: "public",
+      urls: ["/js", "/css", "/img"]
 
   plugin Shield::Helpers
   plugin Cuba::Render
-  plugin Cuba::HtmlHelper
 
   settings[:render][:template_engine] = "haml"
 

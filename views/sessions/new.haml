@@ -2,18 +2,21 @@
   %h1 Log in!
 .row
   .span8.offset3
-    = form_tag "/login", method: :post do
+    %form(accept-charset="UTF-8" action="/sessions" method="post")
       %fieldset
         .clearfix
-          = label_tag :username
-          .input= text_field_tag :username, :username
+          %label(for="username") Username
+          .input
+            %input(id="username" name="username" type="text")
         .clearfix
-          = label_tag :password
-          .input= password_field_tag :password
+          %label(for="password") Password
+          .input
+            %input(id="password" name="password" type="password")
         .clearfix
-          = label_tag :remember_me
-          .input= check_box_tag :remember_me, 1, :remember_me
+          %label(for="remember_me") Remember me
+          .input
+            %input(id="remember_me" name="remember_me" type="checkbox" value="1")
         .actions
-          = submit_tag "Log in", class: "btn primary"
-          = link_to "Register", "/signup", class: "btn"
+          %input(class="btn primary" name="commit" type="submit" value="Log in")
+          %a(href="/users/new" class="btn") Register
 
