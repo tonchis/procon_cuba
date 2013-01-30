@@ -55,7 +55,7 @@ class Procon < Cuba
 
     # Dielemmas
     on "dilemmas" do
-      on authenticated(User)
+      on authenticated(User) do
         on get do
           res.write view("dilemmas/index")
         end
