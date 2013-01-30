@@ -1,8 +1,10 @@
 require_relative "config/init"
 Dir["./models/*.rb"].each {|file| require file}
+Dir["./lib/*.rb"].each {|file| require file}
 
 class Procon < Cuba
-  use Rack::Session::Cookie, :secret => SecureRandom.hex(64)
+  use Shield::Middleware, "/login"
+  use Rack::Session::Cookie, Cuba.settings[:session]
   use Rack::Protection
   use Rack::Static,
       root: "public",
@@ -10,16 +12,15 @@ class Procon < Cuba
 
   plugin Shield::Helpers
   plugin Cuba::Render
+  plugin Helpers
 
   settings[:render][:template_engine] = "haml"
 
   define do
     on root do
-      if authenticated(User)
-        res.redirect "dilemmas"
-      else
-        res.redirect "login"
-      end
+      res.redirect "/dilemmas" if authenticated(User)
+      res.status = 401
+      halt(res.finish)
     end
 
     # Session
@@ -33,11 +34,10 @@ class Procon < Cuba
       end
 
       on post, param("username"), param("password") do |username, password|
-        user = User.authenticate(username, password)
-        if user
-          res.redirect "dilemmas"
+        if login(User, username, password)
+          res.redirect "/dilemmas"
         else
-          res.redirect "login"
+          res.redirect "/login"
         end
       end
     end
@@ -54,10 +54,10 @@ class Procon < Cuba
     end
 
     # Dielemmas
-    on authenticated(User) do
-      on "dilemmas" do
+    on "dilemmas" do
+      on authenticated(User)
         on get do
-          # render index with all dilemmas
+          res.write view("dilemmas/index")
         end
 
         on post do
@@ -77,6 +77,11 @@ class Procon < Cuba
             # delete dilemma
           end
         end
+      end
+
+      on default do
+        res.status = 401
+        halt(res.finish)
       end
     end
   end
