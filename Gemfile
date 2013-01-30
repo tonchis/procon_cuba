@@ -2,10 +2,11 @@ source "http://rubygems.org"
 
 gem "thin"
 gem "cuba"
+gem "tilt"
 gem "rack-protection"
 gem "sequel"
 gem "mysql"
-gem "cuba-haml"
+gem "haml"
 gem "shield"
 
 group :development do

@@ -3,7 +3,12 @@ require_relative "config/init"
 class Procon < Cuba
   use Rack::Session::Cookie, :secret => SecureRandom.hex(64)
   use Rack::Protection
+
   plugin Shield::Helpers
+  plugin Cuba::Render
+  plugin Cuba::HtmlHelper
+
+  settings[:render][:template_engine] = "haml"
 
   define do
     on root do
@@ -16,16 +21,18 @@ class Procon < Cuba
 
     # Session
     on "signup" do
-      # render new user page
+      res.write view("users/new")
     end
 
     on "login" do
-      on get  do
-        # render login page
+      on get do
+        res.write view("sessions/new")
       end
 
       on post do
-        # create login with Shield
+        on param("username"), param("password") do
+          # create login with Shield
+        end
       end
     end
 
@@ -57,7 +64,6 @@ class Procon < Cuba
 
         on ":id" do |id|
           on put do
-            puts id
             # save dilemma
           end
 
@@ -69,5 +75,4 @@ class Procon < Cuba
     end
   end
 end
-
 

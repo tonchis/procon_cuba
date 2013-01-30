@@ -1,0 +1,19 @@
+.page-header
+  %h1 Register!
+.row
+  .span8.offset3
+    = form_tag "/signup", class: "pull-right" do
+      %fieldset
+        .clearfix
+          = label_tag :username
+          = text_field_tag :username, nil, placeholder: "Username", class: "input-small"
+        .clearfix
+          = label_tag :password
+          = password_field_tag :password, nil,
+            placeholder: "Password", class: "input-small"
+        .clearfix
+          = label_tag :password_confirmation
+          = password_field_tag :password_confirmation, nil,
+            placeholder: "Password confirmation", class: "input-small"
+        .actions= submit_tag "Create User", class: "btn primary"
+

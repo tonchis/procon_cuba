@@ -1,0 +1,17 @@
+.topbar
+  .fill
+    .container
+      = link_to "Procon", "/", class: "brand"
+      - if true
+        .row.pull-right
+          .span2
+            = link_to "Log out", "/logout", method: :delete,
+              type: "submit", class: "btn small pull-right"
+      - else
+        = form_tag "/login", method: :post, class: "pull-right" do
+          = text_field_tag :username, params[:username],
+            placeholder: "Username", class: "input-small"
+          = password_field_tag :password, nil,
+            placeholder: "Password", class: "input-small"
+          = button_tag "Log in", type: "submit", class: "btn"
+
