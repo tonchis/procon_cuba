@@ -58,8 +58,7 @@ class Procon < Cuba
       on authenticated(User) do
         on get do
           if req.xhr?
-            # res.write current_user.dilemmas.to_json
-            res.write [{id: 1, user_id: 1, name: "test", reasons: [{id: 1, type: :pro, text: "test"}]}].to_json
+            res.write current_user.dilemmas_to_json
           else
             res.write view("dilemmas/index")
           end
