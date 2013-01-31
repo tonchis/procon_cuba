@@ -69,10 +69,6 @@ class Procon < Cuba
           # create new dilemma
         end
 
-        on "new" do
-          # render new dilema page
-        end
-
         on ":id" do |id|
           on put do
             # save dilemma
