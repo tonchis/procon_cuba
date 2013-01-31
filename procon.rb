@@ -18,9 +18,8 @@ class Procon < Cuba
 
   define do
     on root do
-      res.redirect "/dilemmas" if authenticated(User)
-      res.status = 401
-      halt(res.finish)
+      res.redirect "dilemmas" if authenticated(User)
+      unauthorized
     end
 
     # Session
@@ -35,15 +34,16 @@ class Procon < Cuba
 
       on post, param("username"), param("password") do |username, password|
         if login(User, username, password)
-          res.redirect "/dilemmas"
+          res.redirect "dilemmas"
         else
-          res.redirect "/login"
+          res.redirect "login"
         end
       end
     end
 
     on "logout" do
-      # logout with Shield
+      logout(User)
+      res.redirect "login"
     end
 
     # Users
@@ -57,7 +57,12 @@ class Procon < Cuba
     on "dilemmas" do
       on authenticated(User) do
         on get do
-          res.write view("dilemmas/index")
+          if req.xhr?
+            # res.write current_user.dilemmas.to_json
+            res.write [{id: 1, user_id: 1, name: "test", reasons: [{id: 1, type: :pro, text: "test"}]}].to_json
+          else
+            res.write view("dilemmas/index")
+          end
         end
 
         on post do
@@ -80,8 +85,7 @@ class Procon < Cuba
       end
 
       on default do
-        res.status = 401
-        halt(res.finish)
+        unauthorized
       end
     end
   end

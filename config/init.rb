@@ -6,6 +6,7 @@ require "mysql"
 require "sequel"
 require "shield"
 require "logger"
+require "json"
 
 DB = Sequel.connect("mysql://root@localhost/procon_development")
 DB.loggers << Logger.new(STDOUT)

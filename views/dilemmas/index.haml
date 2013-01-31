@@ -1,5 +1,3 @@
-/- javascript "dilemmas/index"
-
 .page-header
   %h1= "Pros and Cons of being #{current_user.username}!"
 
@@ -38,11 +36,27 @@
           "data-bind" => "click: $parent.delete_con"} delete
     .row
       .span8.offset3
-        %input{"data-bind" => "value: new_reason, valueUpdate: &quot;afterkeydown&quot;", id: "", placeholder: "A good/bad reason", tabindex: "1", type: "text"}
-        %button{class: "btn success", "data-bind" => "click: add_pro, enable: new_reason().length &gt; 0", name: "button", tabindex: "2", type: "submit"} Pro
-        %button{class: "btn danger", "data-bind" => "click: add_con, enable: new_reason().length &gt; 0", name: "button", tabindex: "3", type: "submit"} Con
-        %button{class: "btn", "data-bind" => "click: add_both, enable: new_reason().length &gt; 0", name: "button", tabindex: "4", type: "submit"} Both?
+        %input{"data-bind" => "value: new_reason, valueUpdate: 'afterkeydown'", id: "", placeholder: "A good/bad reason", tabindex: "1", type: "text"}
+        %button{class: "btn success", "data-bind" => "click: add_pro, enable: new_reason().length > 0", name: "button", tabindex: "2", type: "submit"} Pro
+        %button{class: "btn danger", "data-bind" => "click: add_con, enable: new_reason().length > 0", name: "button", tabindex: "3", type: "submit"} Con
+        %button{class: "btn", "data-bind" => "click: add_both, enable: new_reason().length > 0", name: "button", tabindex: "4", type: "submit"} Both?
         .actions
           %button{class: "btn primary", "data-bind" => "click: save_dilemma", name: "button", tabindex: "5", type: "submit"} Save
           %button{class: "btn", "data-bind" => "click: cancel_edit", name: "button", tabindex: "6", type: "submit"} Back
 
+:javascript
+  (function() {
+    $(document).ready(function() {
+      var _this = this;
+      return $.ajax({
+        url: "/dilemmas",
+        type: "GET",
+        success: function(data) {
+          ko.applyBindings(new Dilemmas(JSON.parse(data)), $("#dilemmas")[0]);
+          $("#dilemmas").show();
+          $("#dilemmas ul").on("mouseenter", "li", DilemmasHelper.show_delete);
+          return $("#dilemmas ul").on("mouseleave", "li", DilemmasHelper.hide_delete);
+        }
+      });
+    });
+  }).call(this);
