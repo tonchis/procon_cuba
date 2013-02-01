@@ -22,7 +22,6 @@ class Procon < Cuba
       unauthorized
     end
 
-    # Session
     on "signup" do
       res.write view("users/new")
     end
@@ -46,14 +45,22 @@ class Procon < Cuba
       res.redirect "login"
     end
 
-    # Users
     on "users" do
-      on post do
-        # create new user
+      on post, param("username"), param("passwd"), param("passwd_conf") do |username, passwd, passwd_conf|
+        if passwd == passwd_conf
+          User.create(username: username, password: passwd)
+          res.redirect "login"
+        else
+          session[:error] = "Password and Password confirmation have to match."
+          res.write view("users/new")
+        end
+      end
+
+      on default do
+        res.redirect "signup"
       end
     end
 
-    # Dielemmas
     on "dilemmas" do
       on authenticated(User) do
         on get do
