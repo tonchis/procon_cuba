@@ -20,6 +20,7 @@
         };
       });
       this.new_reason = ko.observable("");
+      this.has_new_reasons = false;
     }
 
     Dilemma.prototype.add_pro = function() {
@@ -27,6 +28,7 @@
         text: this.new_reason(),
         type: "pro"
       });
+      this.has_new_reasons = true;
       return this.new_reason("");
     };
 
@@ -35,6 +37,7 @@
         text: this.new_reason(),
         type: "con"
       });
+      this.has_new_reasons = true;
       return this.new_reason("");
     };
 
@@ -47,6 +50,7 @@
         text: this.new_reason(),
         type: "con"
       });
+      this.has_new_reasons = true;
       return this.new_reason("");
     };
 
@@ -59,15 +63,21 @@
     };
 
     Dilemma.prototype.save_dilemma = function(dilemma) {
-      return $.ajax({
-        url: "/dilemmas/" + (this.dilemma().id),
-        type: "PUT",
-        data: this.dilemma(),
-        success: function() {
-          $("#dilemmas").slideDown();
-          return $("#edit-dilemma").slideUp();
-        }
-      });
+      if(this.has_new_reasons){
+        this.has_new_reasons = false;
+        return $.ajax({
+          url: "/dilemmas/" + (this.dilemma().id),
+          type: "PUT",
+          data: this.dilemma(),
+          success: function() {
+            $("#dilemmas").slideDown();
+            return $("#edit-dilemma").slideUp();
+          }
+        });
+      }else{
+        $("#dilemmas").slideDown();
+        return $("#edit-dilemma").slideUp();
+      }
     };
 
     Dilemma.prototype.cancel_edit = function(dilemma) {

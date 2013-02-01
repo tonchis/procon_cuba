@@ -69,13 +69,15 @@ class Procon < Cuba
           res.write dilemma.to_json
         end
 
-        on ":id", param("reasons") do |id, reasons|
-          on put do
-            # update dilemma
+        on ":id" do |id|
+          dilemma = Dilemma[id]
+
+          on put, param("reasons") do |reasons|
+            dilemma.update_reasons(reasons.map {|reason| JSON.parse(reason)})
           end
 
           on delete do
-            Dilemma[id].delete
+            dilemma.delete
           end
         end
       end
