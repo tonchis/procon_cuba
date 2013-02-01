@@ -64,17 +64,18 @@ class Procon < Cuba
           end
         end
 
-        on post do
-          # create new dilemma
+        on post, param("name") do |name|
+          dilemma = current_user.add_dilemma(name: name)
+          res.write dilemma.to_json
         end
 
-        on ":id" do |id|
+        on ":id", param("reasons") do |id, reasons|
           on put do
-            # save dilemma
+            # update dilemma
           end
 
           on delete do
-            # delete dilemma
+            Dilemma[id].delete
           end
         end
       end
