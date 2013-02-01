@@ -51,11 +51,11 @@
     };
 
     Dilemma.prototype.delete_pro = function(pro) {
-      return DilemmasHelper.delete_reason(pro, this.pros);
+      return this.pros.remove(pro);
     };
 
     Dilemma.prototype.delete_con = function(con) {
-      return DilemmasHelper.delete_reason(con, this.cons);
+      return this.cons.remove(con);
     };
 
     Dilemma.prototype.save_dilemma = function(dilemma) {

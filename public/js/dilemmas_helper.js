@@ -34,14 +34,11 @@
         _results = [];
         for (_i = 0, _len = objects.length; _i < _len; _i++) {
           object = objects[_i];
+          delete object.json_class;
           _results.push(JSON.stringify(object));
         }
         return _results;
       })();
-    };
-
-    DilemmasHelper.delete_reason = function(reason, reasons) {
-      return reasons.destroy(reason);
     };
 
     DilemmasHelper.build_dilemmas = function(attrs) {
