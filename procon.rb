@@ -1,4 +1,4 @@
-require_relative "config/init"
+require_relative "init"
 Dir["./models/*.rb"].each {|file| require file}
 Dir["./lib/*.rb"].each {|file| require file}
 
