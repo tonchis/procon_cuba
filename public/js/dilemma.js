@@ -20,7 +20,7 @@
         };
       });
       this.new_reason = ko.observable("");
-      this.has_new_reasons = false;
+      this.reasons_changed = false;
     }
 
     Dilemma.prototype.add_pro = function() {
@@ -28,7 +28,7 @@
         text: this.new_reason(),
         type: "pro"
       });
-      this.has_new_reasons = true;
+      this.reasons_changed = true;
       return this.new_reason("");
     };
 
@@ -37,7 +37,7 @@
         text: this.new_reason(),
         type: "con"
       });
-      this.has_new_reasons = true;
+      this.reasons_changed = true;
       return this.new_reason("");
     };
 
@@ -50,21 +50,23 @@
         text: this.new_reason(),
         type: "con"
       });
-      this.has_new_reasons = true;
+      this.reasons_changed = true;
       return this.new_reason("");
     };
 
     Dilemma.prototype.delete_pro = function(pro) {
+      this.reasons_changed = true;
       return this.pros.remove(pro);
     };
 
     Dilemma.prototype.delete_con = function(con) {
+      this.reasons_changed = true;
       return this.cons.remove(con);
     };
 
     Dilemma.prototype.save_dilemma = function(dilemma) {
-      if(this.has_new_reasons){
-        this.has_new_reasons = false;
+      if(this.reasons_changed){
+        this.reasons_changed = false;
         return $.ajax({
           url: "/dilemmas/" + (this.dilemma().id),
           type: "PUT",
