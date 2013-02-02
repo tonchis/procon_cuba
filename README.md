@@ -4,30 +4,20 @@ This repo provides a mysql dump: ```db.sql``` to stat hacking right away.
 
 Create the db:
 
-```bash
-$ mysql -u root -e "create database procon_development;"
-```
+    $ mysql -u root -e "create database procon_development;"
 
 and fill it up
 
-```bash
-$ mysql -u root procon_development < db.sql
-```
+    $ mysql -u root procon_development < db.sql
 
 Next, install procon. We use ```dep```
 
-```bash
-$ gem install dep
-```
+    $ gem install dep
 
 And install:
 
-```bash
-$ dep install
-```
+    $ dep install
 
 Lets roll!!
 
-```bash
-$ shotgun config.ru
-```
+    $ shotgun config.ru
