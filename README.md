@@ -21,3 +21,5 @@ And install:
 Lets roll!!
 
     $ shotgun config.ru
+
+You can login with user "tonchis" pass "tonchis".
